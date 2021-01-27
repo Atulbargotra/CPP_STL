@@ -4,7 +4,7 @@
 Created: Jan 26, 2021 4:53 PM
 Updated: Jan 27, 2021 4:49 PM
 
-# **#include<algorithm>**
+# **#include\<algorithm\>**
 
 ## Find Function-
 
@@ -58,7 +58,7 @@ int main() {
 }
 ```
 
-# #include<string>
+# #include\<string\>
 
 > s.empty() → return boolean value if string is empty
 
@@ -92,7 +92,7 @@ cout<<i;
 
 ```
 
-# Sorting - using #include<algorithm> && %include<string>
+# Sorting - using #include\<algorithm> && #include\<string\>
 
  
 
