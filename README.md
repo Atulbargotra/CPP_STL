@@ -1,8 +1,8 @@
-# CPP_STL
 # Competitive
 
 Created: Jan 26, 2021 4:53 PM
-Updated: Jan 27, 2021 4:49 PM
+Tags: competitive, cpp, stl
+Updated: Feb 1, 2021 4:32 PM
 
 # **#include\<algorithm\>**
 
@@ -92,7 +92,7 @@ cout<<i;
 
 ```
 
-# Sorting - using #include\<algorithm> && #include\<string\>
+# Sorting - using #include\<algorithm\> && #include\<string\>
 
  
 
@@ -164,9 +164,9 @@ v.max_size();
 
 > v.size()
 
-> v.capacity()
+> v.capacity() → returns the maximum number of elements that can be held by the vector at that instance tip→ vector double its space if current_size is less.
 
-> v.max_size()
+> v.max_size() → returns the maximum number of elements that can be held by the vector container.
 
 > v.resize() → resize the size of vector
 
@@ -174,9 +174,9 @@ v.max_size();
 
 > v.clear() → remove all the elements from vector
 
-> v.front()
+> v.front() → returns an integer at index 0
 
-> v.back()
+> v.back() → returns an integer at index -1
 
 > v.reserve() → makes the capacity constant to n
 
@@ -184,7 +184,7 @@ v.max_size();
 
 > v.insert(pointer,element)
 
-v.erase(std::remove(v.begin(),v.end(),5),v.end()); // #include<algorithm> 
+v.erase(std::remove(v.begin(),v.end(),5),v.end()); // #include<algorithm>  if want to remove all ocurance use v.end as econd param to erase else it will remove the first occurance only.
 
 # List → double linked list
 
@@ -303,5 +303,281 @@ int main() {
         cout<<p.name<<" "<<p.age;
         pq.pop();
     }
+}
+```
+
+# Maps
+
+```cpp
+#include <iostream>
+#include<map>
+#include<string>
+using namespace std;
+int main() {
+    map<string,int>m;
+    //1. insert
+    m.insert(make_pair("mango",140));
+    //using pair
+    pair<string,int>p;
+    p.first = "apple";
+    p.second = 178;
+    m.insert(p);
+    //direct assignment
+    m["orange"] = 156;
+
+    //2. find 
+    auto pt = m.find("apple");
+    if(pt!=m.end()){
+        cout<<"found"<<m["apple"];
+    }
+    else cout<<"not found";
+
+    //another way to find if key is present
+    if(m.count("mango")){
+        cout<<"found";
+    }
+    else cout<<"not found";
+
+    //3. erasing key-value pair
+    m.erase("mango");
+
+    //4. Updating values
+    m["apple"]+=40;
+
+    cout<<m["apple"];
+
+    //5. iterating over keys and values
+
+    for(auto it=m.begin();it!=m.end();it++){
+        cout<<it->first<<" "<<(*it).second<<endl;
+        //(*it).first
+    }
+
+    for(auto p: m){
+        cout<<p.first<<" "<<p.second<<endl;
+    }
+
+}
+```
+
+# Multi map
+
+```cpp
+#include <iostream>
+#include<map>
+#include<string>
+using namespace std;
+int main() {
+    multimap<char,string>m;
+    //1. insert
+    m.insert(make_pair('a',"apple"));
+    //using pair
+    pair<char,string>p;
+    p.first = 'a';
+    p.second = "acer";
+    m.insert(p);
+    //direct assignment
+    m.insert(make_pair('b',"ball"));
+    m.insert(make_pair('b',"bat"));
+    m.insert(make_pair('c',"cat"));
+    m.insert(make_pair('d',"dog"));
+    //2. find 
+    auto pt = m.find('b');
+    if(pt!=m.end()){
+        m.erase(pt);
+    }
+    else cout<<"not found";
+    //3. iterating over keys and value
+
+    for(auto p: m){
+        cout<<p.first<<" "<<p.second<<endl;
+    }
+
+    auto it1 = m.lower_bound('b');
+    auto it2 = m.upper_bound('d');
+    for(auto it3 = it1;it3!=it2;it3++){
+        cout<<it3->second;
+    }
+}
+```
+
+# Unordered map for our custom class
+
+```cpp
+#include <iostream>
+#include<unordered_map>
+#include<string>
+using namespace std;
+class student{
+    public:
+    string fname,sname,rollno;
+    student(string fname,string sname,string rollno){
+        this->fname = fname;
+        this->sname = sname;
+        this->rollno = rollno;
+    }
+    bool operator==(const student &s) const{
+        return rollno == s.rollno;
+    }
+};
+
+class Hashf{
+    public:
+    size_t operator()(const student &s) const{
+        return s.fname.length()+s.sname.length();
+    }
+    //size_t is a unsigned int datatype. it is used to represent size of some memory in bytes
+};
+
+int main() {
+    unordered_map<student,int,Hashf>m;
+    student s1("atul","verma","37");
+    student s2("atul","verma","38");
+
+    m[s1] = 140;
+    m[s2] = 189;
+
+    for(auto p: m){
+        cout<<p.first.fname<<" "<<p.second;
+    }
+    //find value using key
+    cout<<m[s2];
+}
+```
+
+# Set
+
+```cpp
+//fira code ligations 
+
+#include <iostream>
+#include<set>
+using namespace std;
+int main() {
+    set<int>s;
+    int arr[] = {4,5,5,7,8};
+    int n = sizeof(arr)/sizeof(int);
+    for(int i=0;i<n;i++){
+        s.insert(arr[i]);
+    }
+    s.erase(4);
+
+    auto it = s.find(5);
+    s.erase(it);
+    for(set<int>::iterator it = s.begin();it!=s.end();it++){
+        cout<<(*it)<<",";
+    }
+}
+```
+
+# Multi Set
+
+```cpp
+#include <iostream>
+#include<set>
+using namespace std;
+
+typedef multiset<int>::iterator Itt;
+
+int main() {
+    multiset<int>s;
+    int arr[] = {4,5,5,7,8,10,10,100,4};
+    int n = sizeof(arr)/sizeof(int);
+    for(int i=0;i<n;i++){
+        s.insert(arr[i]);
+    }
+    s.erase(4);
+
+    auto it = s.find(5);
+    s.erase(it);
+    for(set<int>::iterator it = s.begin();it!=s.end();it++){
+        cout<<(*it)<<",";
+    }
+
+    //finding pointer to same elemets -> equal_range
+
+    pair<Itt,Itt> p = s.equal_range(10);
+    for(auto it = p.first;it!=p.second;it++){
+        cout<<*it;
+    }
+
+    //count
+    cout<<s.count(10);
+
+    //find
+    it = s.find(10);
+    cout<<*it;
+
+    //upper_bouund and lower_bound 
+
+}
+```
+
+# Policy based data structures
+
+```cpp
+#include<bits/stdc++.h>
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace std;
+using namespace __gnu_pbds;
+
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> PBDS;
+int main() {
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+
+	PBDS St;
+	St.insert(1);
+	St.insert(3);
+	St.insert(4);
+	St.insert(10);
+	St.insert(15);
+	for (int i = 0; i < (int)St.size(); i++) {
+		cout << i << " " << *St.find_by_order(i) << endl;
+	}
+	//find_by_order => at given index what is the value or kth largest element till now
+
+	//order_of_key => how many elements are there which are smaller than n or index at which we can insert in the set
+	
+	cout << St.order_of_key(5);
+	return 0;
+}
+```
+
+```cpp
+//if we want to insert same values in the set then we can use pair<value,index>
+//typedef tree<pair<int,int>, null_type, less<pair<int,int>>, rb_tree_tag, tree_order_statistics_node_update> PBDS;
+#include<bits/stdc++.h>
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+using namespace std;
+using namespace __gnu_pbds;
+
+typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update > PBDS;
+int main() {
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+
+	PBDS St;
+	St.insert({1, 0});
+	St.insert({2, 1});
+	St.insert({2, 2});
+	for (int i = 0; i < (int)St.size(); i++) {
+		cout << i << " " << St.find_by_order(i)->first << " " << St.find_by_order(i)->second << endl;
+	}
+	//find_by_order => at given index what is the value or kth largest element till now in logn
+
+	//order_of_key => how many elements are there which are smaller than n or index at which we can insert in the set in logn
+
+	//insertion in set takes logn
+
+	cout << St.order_of_key({5,100000});
+
+	return 0;
 }
 ```
